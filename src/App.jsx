@@ -4,8 +4,8 @@ import { v4 as uuid } from 'uuid'
 
 export default function App() {
 
-  const [contato, setContato] = useState({ nome: '', telefone: '' })
-  const [listaContatos, setlistaContatos] = useState([])
+  const [contato, setContato] = useState({ id: '', nome: '', telefone: '' })
+  const [listaContatos, serListaContatos] = useState([])
 
   const inputNome = useRef()
   const inputTelefone = useRef()
@@ -21,7 +21,7 @@ export default function App() {
   function addContato() {
     if (contato.nome === "" || contato.telefone === "") {
       alert('"Nome" e "Telefone" são campos obrigatórios')
-      return  
+      return
     }
 
     let duplicado = listaContatos.find((ct) => ct.nome === contato.nome && ct.telefone === contato.telefone)
@@ -32,7 +32,7 @@ export default function App() {
       return
     }
 
-    setlistaContatos([...listaContatos, contato])
+    serListaContatos([...listaContatos, { ...contato, id: uuid() }])
 
     setContato({ nome: "", telefone: "" })
 
@@ -46,13 +46,18 @@ export default function App() {
     }
   }
 
-  function limparStorage(){
-    setlistaContatos([])
+  function limparStorage() {
+    serListaContatos([])
+  }
+
+  function removerContato(id) {
+    let novaLista = listaContatos.filter(contato => contato.id !== id)
+    serListaContatos(novaLista)
   }
 
   useEffect(() => {
     if (localStorage.getItem('meus_contatos') !== null) {
-      setlistaContatos(JSON.parse(localStorage.getItem('meus_contatos')))
+      serListaContatos(JSON.parse(localStorage.getItem('meus_contatos')))
     }
   }, [])
 
@@ -78,7 +83,7 @@ export default function App() {
       <button onClick={limparStorage}>Limpar Lista</button>
 
       {listaContatos.map(contato => {
-        return <Contato key={uuid()} nome={contato.nome} telefone={contato.telefone} />
+        return <Contato key={contato.id} id={contato.id} nome={contato.nome} telefone={contato.telefone} remover={removerContato} />
       })}
     </>
   )
