@@ -37,6 +37,12 @@ export default function App() {
 
   }
 
+  function enterAddContato(event) {
+    if(event.code === 'Enter'){
+      addContato()
+    }
+  }
+
   return (
     <>
       <h1>Lista de Contatos</h1>
@@ -48,7 +54,7 @@ export default function App() {
 
       <div>
         <label>Telefone:</label><br />
-        <input type="tel" ref={inputTelefone} onChange={novoTelefone} value={contato.telefone} />
+        <input type="tel" ref={inputTelefone} onChange={novoTelefone} onKeyUp={enterAddContato} value={contato.telefone} />
       </div>
 
       <button onClick={addContato}>Adicionar Contato</button>
