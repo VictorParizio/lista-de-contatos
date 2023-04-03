@@ -8,6 +8,7 @@ export default function App() {
   const [listaContato, setListaContato] = useState([])
 
   const inputNome = useRef()
+  const inputTelefone = useRef()
 
   function novoNome(event) {
     setContato({ ...contato, nome: event.target.value })
@@ -20,11 +21,20 @@ export default function App() {
   function addContato() {
     if (contato.nome === "" || contato.telefone === "") return
 
+    let duplicado = listaContato.find((ct) => ct.nome === contato.nome && ct.telefone === contato.telefone)
+
+    if (typeof duplicado !== 'undefined') {
+      inputTelefone.current.focus()
+      alert('Esse número de Telefone já existe')
+      return
+    }
+
     setListaContato([...listaContato, contato])
 
-    setContato({nome: "", telefone: ""})
+    setContato({ nome: "", telefone: "" })
 
     inputNome.current.focus()
+
   }
 
   return (
@@ -38,7 +48,7 @@ export default function App() {
 
       <div>
         <label>Telefone:</label><br />
-        <input type="tel" onChange={novoTelefone} value={contato.telefone} />
+        <input type="tel" ref={inputTelefone} onChange={novoTelefone} value={contato.telefone} />
       </div>
 
       <button onClick={addContato}>Adicionar Contato</button>
