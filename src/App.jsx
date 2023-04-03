@@ -46,6 +46,10 @@ export default function App() {
     }
   }
 
+  function limparStorage(){
+    setlistaContatos([])
+  }
+
   useEffect(() => {
     if (localStorage.getItem('meus_contatos') !== null) {
       setlistaContatos(JSON.parse(localStorage.getItem('meus_contatos')))
@@ -71,6 +75,7 @@ export default function App() {
       </div>
 
       <button onClick={addContato}>Adicionar Contato</button>
+      <button onClick={limparStorage}>Limpar Lista</button>
 
       {listaContatos.map(contato => {
         return <Contato key={uuid()} nome={contato.nome} telefone={contato.telefone} />
