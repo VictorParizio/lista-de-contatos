@@ -1,11 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import Contato from './componentes/Contato'
-import {v4 as uuid} from 'uuid'
+import { v4 as uuid } from 'uuid'
 
 export default function App() {
 
   const [contato, setContato] = useState({ nome: '', telefone: '' })
   const [listaContato, setListaContato] = useState([])
+
+  const inputNome = useRef()
 
   function novoNome(event) {
     setContato({ ...contato, nome: event.target.value })
@@ -16,7 +18,13 @@ export default function App() {
   }
 
   function addContato() {
+    if (contato.nome === "" || contato.telefone === "") return
+
     setListaContato([...listaContato, contato])
+
+    setContato({nome: "", telefone: ""})
+
+    inputNome.current.focus()
   }
 
   return (
@@ -25,7 +33,7 @@ export default function App() {
       <hr />
       <div>
         <label>Nome:</label><br />
-        <input type="text" onChange={novoNome} value={contato.nome} />
+        <input type="text" ref={inputNome} onChange={novoNome} value={contato.nome} />
       </div>
 
       <div>
