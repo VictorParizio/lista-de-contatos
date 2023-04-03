@@ -1,11 +1,11 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import Contato from './componentes/Contato'
 import { v4 as uuid } from 'uuid'
 
 export default function App() {
 
   const [contato, setContato] = useState({ nome: '', telefone: '' })
-  const [listaContato, setListaContato] = useState([])
+  const [listaContatos, setlistaContatos] = useState([])
 
   const inputNome = useRef()
   const inputTelefone = useRef()
@@ -19,9 +19,12 @@ export default function App() {
   }
 
   function addContato() {
-    if (contato.nome === "" || contato.telefone === "") return
+    if (contato.nome === "" || contato.telefone === "") {
+      alert('"Nome" e "Telefone" são campos obrigatórios')
+      return  
+    }
 
-    let duplicado = listaContato.find((ct) => ct.nome === contato.nome && ct.telefone === contato.telefone)
+    let duplicado = listaContatos.find((ct) => ct.nome === contato.nome && ct.telefone === contato.telefone)
 
     if (typeof duplicado !== 'undefined') {
       inputTelefone.current.focus()
@@ -29,7 +32,7 @@ export default function App() {
       return
     }
 
-    setListaContato([...listaContato, contato])
+    setlistaContatos([...listaContatos, contato])
 
     setContato({ nome: "", telefone: "" })
 
@@ -38,10 +41,20 @@ export default function App() {
   }
 
   function enterAddContato(event) {
-    if(event.code === 'Enter'){
+    if (event.code === 'Enter') {
       addContato()
     }
   }
+
+  useEffect(() => {
+    if (localStorage.getItem('meus_contatos') !== null) {
+      setlistaContatos(JSON.parse(localStorage.getItem('meus_contatos')))
+    }
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem('meus_contatos', JSON.stringify(listaContatos))
+  }, [listaContatos])
 
   return (
     <>
@@ -59,7 +72,7 @@ export default function App() {
 
       <button onClick={addContato}>Adicionar Contato</button>
 
-      {listaContato.map(contato => {
+      {listaContatos.map(contato => {
         return <Contato key={uuid()} nome={contato.nome} telefone={contato.telefone} />
       })}
     </>
