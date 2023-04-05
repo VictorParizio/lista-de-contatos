@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import Contato from './componentes/Contato'
 import { v4 as uuid } from 'uuid'
+import './App.css'
 
 export default function App() {
 
@@ -66,25 +67,31 @@ export default function App() {
   }, [listaContatos])
 
   return (
-    <>
-      <h1>Lista de Contatos</h1>
-      <hr />
-      <div>
-        <label>Nome:</label><br />
-        <input type="text" ref={inputNome} onChange={novoNome} value={contato.nome} />
-      </div>
+    <main>
+      <section className='header'>
+        <h1>Lista de Contatos</h1>
+      </section>
 
-      <div>
-        <label>Telefone:</label><br />
-        <input type="tel" ref={inputTelefone} onChange={novoTelefone} onKeyUp={enterAddContato} value={contato.telefone} />
-      </div>
+      <section className='deshboar'>
+        <div>
+          <label className='label'>Nome:</label>
+          <input type="text" ref={inputNome} onChange={novoNome} value={contato.nome} />
+        </div>
 
-      <button onClick={addContato}>Adicionar Contato</button>
-      <button onClick={limparStorage}>Limpar Lista</button>
+        <div>
+          <label>Telefone:</label>
+          <input type="tel" ref={inputTelefone} onChange={novoTelefone} onKeyUp={enterAddContato} value={contato.telefone} />
+        </div>
 
-      {listaContatos.map(contato => {
-        return <Contato key={contato.id} id={contato.id} nome={contato.nome} telefone={contato.telefone} remover={removerContato} />
-      })}
-    </>
+          <button onClick={addContato}>Adicionar</button>
+          {/* <button onClick={limparStorage}>Limpar Lista</button> */}
+      </section>
+
+      <section className='list'>
+        {listaContatos.map(contato => {
+          return <Contato key={contato.id} id={contato.id} nome={contato.nome} telefone={contato.telefone} remover={removerContato} />
+        })}
+      </section>
+    </main>
   )
 }

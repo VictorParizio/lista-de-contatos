@@ -1,0 +1,89 @@
+:root{
+    --dark: rgb(25, 25, 25);
+    --moderate: rgb(105, 105, 105);
+    --light: rgb(200, 200, 200);
+    --emphasis: rgb(255, 255, 255);
+}
+
+* {
+    font-family: 'Times New Roman', Times, serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: var(--light);
+}
+
+input{
+    background-color: var(--light);
+    color: var(--dark);
+    padding: 0 10px;
+}
+
+input,
+button {
+    display: block;
+    height: 35px;
+    width: 200px;
+    border: none;
+    border-radius: 5px;
+    margin: 5px 0;
+    box-shadow: 0 5px 10px var(--dark);
+}
+
+button {
+    background-color: transparent;
+    cursor: pointer;
+    letter-spacing: 2px;
+}
+
+button:hover{
+    box-shadow: 0 0 15px var(--light);
+    color: var(--emphasis);
+    font-weight: bolder;
+}
+
+body {
+    background-color: var(--dark);
+    padding: 30px;
+}
+
+main{
+    display: grid;
+    justify-content: center;
+    gap: 30px;
+}
+
+section {
+    padding: 30px;
+    max-width: 500px;
+    min-width: 300px;
+    border-radius: 5px;
+}
+
+.header {
+    background-color: var(--moderate);
+    text-align: center;
+}
+
+.deshboar {
+    background-color: var(--moderate);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.list {
+    display: grid;
+    gap: 10px;
+    padding: 0;
+}
+
+.list div {
+    background-color: var(--moderate);
+    display: flex;
+    justify-content: space-around;
+    border-radius: 5px;
+    padding: 10px;
+}
